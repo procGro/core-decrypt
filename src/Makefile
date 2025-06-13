@@ -12,4 +12,11 @@ all:
 	${CXX} ${CXXFLAGS} *.cpp -o ${OUTPUT} -L${OPENCL_LIBS} -L${OPENCL_INCLUDE} ${LIBS} -DCL_TARGET_OPENCL_VERSION=${OPENCL_VERSION}
 
 clean:
-	rm -rf ${OUTPUT}
+	rm -rf ${OUTPUT} embedcl.bin core-decrypt_cl.cpp
+	$(MAKE) -C tests clean
+
+test: all
+	@echo "Building and running tests..."
+	$(MAKE) -C tests run
+
+.PHONY: all clean test

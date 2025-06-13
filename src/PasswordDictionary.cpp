@@ -49,8 +49,11 @@ void PasswordDictionary::load()
 
         offsets.push_back(offset);
 
-        // Add to the very end so the length of the last word (_index[i + 1] - _index[i]) can
-        // still be calculated
+        // Append the total length of the concatenated `_dictionary` string. This value acts as a sentinel
+        // in `_index`. It ensures that `get_password` can calculate the length of any password
+        // (including the very last one overall) by subtracting its starting position (`_index[k]`)
+        // from the starting position of the next password (`_index[k+1]`). For the absolute last
+        // password in the dictionary, `_index[k+1]` will be this sentinel value (the total length).
         if(i == _files.size() - 1) {
             _index.push_back(pos);
         }
